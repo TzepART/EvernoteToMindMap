@@ -12,24 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 
 $parameters = Yaml::parseFile(__DIR__.'/../app/parameters.yml');
 
-$sandbox = true;
-$china   = false;
-$oauth_handler = new \Evernote\Auth\OauthHandler($sandbox, false, $china);
-$key      = $parameters['parameters']['app_key'];
-$secret   = $parameters['parameters']['app_secret_key'];
-$callback = 'http://localhost:8000/notes.php';
-try {
-    $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
-    echo "\nOauth Token : " . $oauth_data['oauth_token'];
-    // Now you can use this token to call the api
-    $client = new \Evernote\Client($oauth_data['oauth_token']);
-} catch (Evernote\Exception\AuthorizationDeniedException $e) {
-    //If the user decline the authorization, an exception is thrown.
-    echo "Declined";
-}
-
-$token = $client->getToken();
-file_put_contents('tokens.txt',$token.PHP_EOL,FILE_APPEND);
+$token = $parameters['parameters']['app_dev_token'];
 
 /** Understanding SANDBOX vs PRODUCTION vs CHINA Environments
  *
@@ -72,8 +55,9 @@ $order = \Evernote\Client::SORT_ORDER_REVERSE | \Evernote\Client::SORT_ORDER_REC
  */
 $maxResult = 5;
 try{
-    $results = $client->findNotesWithSearch($search, $notebook, $scope, $order, $maxResult);
+//    $results = $client->findNotesWithSearch($search, $notebook, $scope, $order, $maxResult);
 //    $results = $client->findNotesWithSearch($search);
+    $results = $client->getNote('74a8f706-1ffe-445f-ad2e-59c094c226f7');
 }catch (\Exception $exception){
     echo "<pre>";
     var_dump($exception->getMessage());
@@ -82,7 +66,7 @@ try{
 
 if(!empty($results)){
     echo "<pre>";
-        var_dump($results);
+        var_dump($results->getContent()->toEnml());
     echo "</pre>";
     foreach ($results as $result) {
         $noteGuid    = $result->guid;

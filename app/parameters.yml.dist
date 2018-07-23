@@ -1,3 +1,4 @@
 parameters:
     app_key: 'your_app_key'
-    app_secret_key: 'app_secret_key'
+    app_secret_key: 'your_app_secret_key'
+    app_dev_token: 'your_app_dev_token'
