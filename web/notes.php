@@ -8,12 +8,16 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Symfony\Component\Yaml\Yaml;
+
 if(empty($_GET['oauth_token'])){
+    $parameters = Yaml::parseFile(__DIR__.'/../app/parameters.yml');
+
     $sandbox = true;
     $china   = false;
     $oauth_handler = new \Evernote\Auth\OauthHandler($sandbox, false, $china);
-    $key      = '%app_key%';
-    $secret   = '%app_secret_key%';
+    $key      = $parameters['parameters']['app_key'];
+    $secret   = $parameters['parameters']['app_secret_key'];
     $callback = 'http://localhost:8000/notes.php';
     try {
         $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
