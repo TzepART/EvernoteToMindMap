@@ -1,5 +1,6 @@
 {
     "require": {
-        "evernote/evernote-cloud-sdk-php": "^2.0"
+        "evernote/evernote-cloud-sdk-php": "^2.0",
+        "symfony/yaml": "^4.1"
     }
 }
