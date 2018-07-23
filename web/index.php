@@ -41,7 +41,7 @@ $china   = false;
 $oauth_handler = new \Evernote\Auth\OauthHandler($sandbox, false, $china);
 $key      = $parameters['parameters']['app_key'];
 $secret   = $parameters['parameters']['app_secret_key'];
-$callback = 'http://localhost:8000/notes.php';
+$callback = 'http://localhost:8000/index.php';
 try {
     $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
     echo "\nOauth Token : " . $oauth_data['oauth_token'];
