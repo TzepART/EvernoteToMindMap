@@ -29,6 +29,7 @@ try {
 }
 
 $token = $client->getToken();
+file_put_contents('tokens.txt',$token.PHP_EOL,FILE_APPEND);
 
 /** Understanding SANDBOX vs PRODUCTION vs CHINA Environments
  *
