@@ -65,9 +65,9 @@ try{
 }
 
 if(!empty($results)){
-    echo "<pre>";
+//    echo "<pre>";
         var_dump($results->getContent()->toEnml());
-    echo "</pre>";
+//    echo "</pre>";
     foreach ($results as $result) {
         $noteGuid    = $result->guid;
         $noteType    = $result->type;
