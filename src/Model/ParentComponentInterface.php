@@ -18,7 +18,7 @@ interface ParentComponentInterface extends ComponentInterface
     /**
      * @param ComponentInterface[] $children
      */
-    public function setChildren($children);
+    public function setChildren(array $children);
 
     /**
      * @param ComponentInterface $child

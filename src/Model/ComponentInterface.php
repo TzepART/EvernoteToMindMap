@@ -22,7 +22,7 @@ interface ComponentInterface
     /**
      * @return ParentComponentInterface|null
      */
-    public function getParent():?ParentComponentInterface;
+    public function getParent(): ?ParentComponentInterface;
 
     /**
      * @param string $name
@@ -33,5 +33,5 @@ interface ComponentInterface
     /**
      * @return string
      */
-    public function getName():string ;
+    public function getName(): string;
 }

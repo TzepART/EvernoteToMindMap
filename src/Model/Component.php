@@ -39,7 +39,7 @@ abstract class Component implements ComponentInterface
     /**
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
