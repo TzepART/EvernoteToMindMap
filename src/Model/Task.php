@@ -9,6 +9,10 @@
 namespace App\Model;
 
 
+/**
+ * Class Task
+ * @package App\Model
+ */
 class Task extends Component{
 
     /**
@@ -28,6 +32,8 @@ class Task extends Component{
         // Retrieve constructor of Component
         parent::__construct($name, $parent);
     }
+
+
     /**
      * @return mixed
      */
@@ -35,6 +41,8 @@ class Task extends Component{
     {
         return $this->type;
     }
+
+
     /**
      * @param $type
      */
