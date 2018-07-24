@@ -59,15 +59,10 @@ try{
 //    $results = $client->findNotesWithSearch($search);
     $results = $client->getNote('74a8f706-1ffe-445f-ad2e-59c094c226f7');
 }catch (\Exception $exception){
-    echo "<pre>";
     var_dump($exception->getMessage());
-    echo "</pre>";
 }
 
 if(!empty($results)){
-//    echo "<pre>";
-        var_dump($results->getContent()->toEnml());
-//    echo "</pre>";
     foreach ($results as $result) {
         $noteGuid    = $result->guid;
         $noteType    = $result->type;

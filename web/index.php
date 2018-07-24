@@ -7,6 +7,7 @@
  */
 
 require __DIR__ . '/../vendor/autoload.php';
+session_start();
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -43,10 +44,16 @@ $key      = $parameters['parameters']['app_key'];
 $secret   = $parameters['parameters']['app_secret_key'];
 $callback = 'http://localhost:8000/index.php';
 try {
-    $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
-    echo "\nOauth Token : " . $oauth_data['oauth_token'];
-    // Now you can use this token to call the api
-    $client = new \Evernote\Client($oauth_data['oauth_token']);
+    if(empty($_SESSION['my_oauth_token'])){
+        $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
+        // Now you can use this token to call the api
+        $client = new \Evernote\Client($oauth_data['oauth_token']);
+        $_SESSION['my_oauth_token'] = $oauth_data['oauth_token'];
+    }else{
+        $client = new \Evernote\Client($_SESSION['my_oauth_token']);
+    }
+    echo "\nOauth Token : " .$_SESSION['my_oauth_token'];
+
 } catch (Evernote\Exception\AuthorizationDeniedException $e) {
     //If the user decline the authorization, an exception is thrown.
     echo "Declined";
