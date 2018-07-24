@@ -6,12 +6,12 @@
  * Time: 15:17
  */
 
-namespace App\Model;
+namespace Model;
 
 
 /**
  * Class Task
- * @package App\Model
+ * @package Model
  */
 class Task extends Component{
 

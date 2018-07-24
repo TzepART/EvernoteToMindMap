@@ -6,12 +6,12 @@
  * Time: 15:17
  */
 
-namespace App\Model;
+namespace Model;
 
 
 /**
  * Class Component
- * @package App\Model
+ * @package Model
  */
 abstract class Component implements ComponentInterface
 {

@@ -6,12 +6,12 @@
  * Time: 15:17
  */
 
-namespace App\Model;
+namespace Model;
 
 
 /**
  * Class Node
- * @package App\Model
+ * @package Model
  */
 class Node extends Component implements ParentComponentInterface
 {
@@ -61,5 +61,19 @@ class Node extends Component implements ParentComponentInterface
         return $this;
     }
 
+    /**
+     * @param int $level
+     */
+    public function showChildrenTree($level = 0)
+    {
+        echo str_repeat(' ', $level) . $this->getName().PHP_EOL;
+        foreach ($this->getChildren() as $child) {
+            if ($child instanceof self) {
+                $child->showChildsTree($level + 1);
+            } else {
+                echo str_repeat(' ', $level + 1) . $child->getName().PHP_EOL;
+            }
+        }
+    }
 
 }

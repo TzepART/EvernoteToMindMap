@@ -6,11 +6,11 @@
  * Time: 15:18
  */
 
-namespace App\Model;
+namespace Model;
 
 /**
  * Interface ComponentInterface
- * @package App\Model
+ * @package Model
  */
 interface ComponentInterface
 {
