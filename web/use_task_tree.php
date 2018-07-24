@@ -22,4 +22,4 @@ $node4 = new Node('node4', $node2);
 $task1 = new Task('task1', 'txt', $node1);
 $task2 = new Task('doc', 'pdf', $node4);
 
-$root->showChildrenTree(1);
+$root->showChildrenTree(3);

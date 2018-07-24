@@ -66,12 +66,12 @@ class Node extends Component implements ParentComponentInterface
      */
     public function showChildrenTree($level = 0)
     {
-        echo str_repeat(' ', $level) . $this->getName().PHP_EOL;
+        echo str_repeat('...', $level) . $this->getName().'</br>';
         foreach ($this->getChildren() as $child) {
             if ($child instanceof ParentComponentInterface) {
-                $child->showChildsTree($level + 1);
+                $child->showChildrenTree($level + 1);
             } else {
-                echo str_repeat(' ', $level + 1) . $child->getName().PHP_EOL;
+                echo str_repeat('...', $level + 1) . $child->getName().'</br>';
             }
         }
     }

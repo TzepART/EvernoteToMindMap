@@ -34,6 +34,9 @@ abstract class Component implements ComponentInterface
     {
         $this->name = $name;
         $this->parent = $parent;
+        if ($this->parent instanceof ParentComponentInterface) {
+            $this->parent->addChild($this);
+        }
     }
 
     /**
