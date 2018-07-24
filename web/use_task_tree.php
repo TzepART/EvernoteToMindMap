@@ -15,11 +15,11 @@ use \Model\Node;
 use \Model\Task;
 
 $root = new Node('root');
-$dir1 = new Node('dir1', $root);
-$dir2 = new Node('dir2', $root);
-$dir3 = new Node('dir3', $root);
-$dir4 = new Node('dir4', $dir2);
-$file1 = new Task('file1', 'txt', $dir1);
-$file2 = new Task('doc', 'pdf', $dir4);
+$node1 = new Node('node1', $root);
+$node2 = new Node('node2', $root);
+$node3 = new Node('node3', $root);
+$node4 = new Node('node4', $node2);
+$task1 = new Task('task1', 'txt', $node1);
+$task2 = new Task('doc', 'pdf', $node4);
 
-$root->showChildrenTree();
+$root->showChildrenTree(1);

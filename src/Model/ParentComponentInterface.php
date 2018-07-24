@@ -8,6 +8,10 @@
 
 namespace Model;
 
+/**
+ * Interface ParentComponentInterface
+ * @package Model
+ */
 interface ParentComponentInterface extends ComponentInterface
 {
     /**
@@ -24,4 +28,10 @@ interface ParentComponentInterface extends ComponentInterface
      * @param ComponentInterface $child
      */
     public function addChild(ComponentInterface $child);
+
+    /**
+     * @param int $level
+     * @return mixed
+     */
+    public function showChildrenTree($level = 0);
 }
