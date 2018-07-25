@@ -1,0 +1,3 @@
+mind_map_route:
+    path:     /mind-map/
+    defaults: { _controller: 'MindMapController::viewMindMapAction' }
