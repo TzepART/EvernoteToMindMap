@@ -2,6 +2,8 @@
     "require": {
         "evernote/evernote-cloud-sdk-php": "^2.0",
         "symfony/yaml": "^4.1",
-        "symfony/routing": "^4.1"
+        "symfony/routing": "^4.1",
+        "doctrine/annotations": "^1.6",
+        "symfony/config": "^4.1"
     }
 }
