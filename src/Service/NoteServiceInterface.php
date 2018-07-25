@@ -8,5 +8,8 @@
 
 interface NoteServiceInterface
 {
+    /**
+     * @return string
+     */
     public function getCheckListFromNote() : string;
 }

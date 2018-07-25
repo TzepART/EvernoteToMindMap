@@ -8,5 +8,8 @@
 
 interface NoteInterface
 {
+    /**
+     * @return mixed
+     */
     public function getNoteContent();
 }

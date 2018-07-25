@@ -8,8 +8,15 @@
 
 namespace Controller;
 
+/**
+ * Class MindMapController
+ * @package Controller
+ */
 class MindMapController
 {
+    /**
+     *
+     */
     public function viewMindMapAction()
     {
 

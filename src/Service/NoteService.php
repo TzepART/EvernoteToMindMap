@@ -23,6 +23,9 @@ class NoteService implements NoteServiceInterface
         $this->note = $note;
     }
 
+    /**
+     * @return string
+     */
     public function getCheckListFromNote() : string
     {
         $checkList = '';
