@@ -11,8 +11,8 @@ function __autoload($classname) {
     include_once($filename);
 }
 
-use \Model\Node;
-use \Model\Task;
+use Model\MindMap\Node;
+use Model\MindMap\Task;
 
 $root = new Node('root');
 $node1 = new Node('node1', $root);

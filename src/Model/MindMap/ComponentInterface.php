@@ -6,7 +6,7 @@
  * Time: 15:18
  */
 
-namespace Model;
+namespace Model\MindMap;
 
 /**
  * Interface ComponentInterface
