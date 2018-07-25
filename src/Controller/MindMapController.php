@@ -6,7 +6,12 @@
  * Time: 17:06
  */
 
+namespace Controller;
+
 class MindMapController
 {
+    public function viewMindMapAction()
+    {
 
+    }
 }
