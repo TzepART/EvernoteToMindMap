@@ -6,6 +6,11 @@
  * Time: 17:08
  */
 
+namespace Service;
+
+
+use Model\Note\NoteInterface;
+
 class NoteService implements NoteServiceInterface
 {
     /**

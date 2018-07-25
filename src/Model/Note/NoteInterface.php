@@ -6,6 +6,13 @@
  * Time: 17:13
  */
 
+namespace Model\Note;
+
+
+/**
+ * Interface NoteInterface
+ * @package Model\Note
+ */
 interface NoteInterface
 {
     /**

@@ -6,6 +6,9 @@
  * Time: 17:08
  */
 
+namespace Service;
+
+
 interface NoteServiceInterface
 {
     /**
