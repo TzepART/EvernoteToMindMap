@@ -1,3 +1,3 @@
 mind_map_route:
     path:     /mind-map/
-    defaults: { _controller: 'MindMapController.php::viewMindMapAction' }
+    defaults: { _controller: 'MindMapController::viewMindMapAction' }
