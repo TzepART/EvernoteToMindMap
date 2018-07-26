@@ -6,7 +6,7 @@
  * Time: 01:33
  */
 
-namespace Model;
+namespace Model\Base;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;

@@ -6,7 +6,8 @@
  * Time: 19:22
  */
 
-use Model\Request;
+use Model\Base\Request;
+use Model\Base\Response;
 
 /**
  * @var Composer\Autoload\ClassLoader $loader
@@ -22,7 +23,7 @@ spl_autoload_register(function ($class_name) {
 
 try{
     $request = (new Request($requestUri))->matchRequestUri();
-    $response = (new \Model\Response($request))->getResponse();
+    $response = (new Response($request))->getResponse();
 }catch (\Exception $exception){
     echo $exception->getMessage();
 }

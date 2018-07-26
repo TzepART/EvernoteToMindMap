@@ -6,7 +6,7 @@
  * Time: 02:00
  */
 
-namespace Model;
+namespace Model\Base;
 
 
 class Response
