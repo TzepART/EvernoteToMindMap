@@ -8,10 +8,27 @@
 
 namespace Service\Evernote;
 
+use Evernote\Client;
 
+
+/**
+ * Interface AuthInterface
+ * @package Service\Evernote
+ */
 interface AuthInterface
 {
-    public function isEvernoteAuth();
+    /**
+     * @return bool
+     */
+    public function isEvernoteAuth() : bool;
 
+    /**
+     * @return mixed
+     */
     public function authorize();
+
+    /**
+     * @return mixed
+     */
+    public function getEvernoteClient() : ?Client;
 }
