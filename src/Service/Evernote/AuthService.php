@@ -47,6 +47,9 @@ class AuthService implements AuthInterface
         $this->sessionService = new Session();
     }
 
+    /**
+     * @return bool
+     */
     public function isEvernoteAuth() : bool
     {
         if(empty($_SESSION['my_oauth_token'])){
@@ -56,6 +59,10 @@ class AuthService implements AuthInterface
         }
     }
 
+    /**
+     * @return mixed|void
+     * @throws \Evernote\Exception\AuthorizationDeniedException
+     */
     public function authorize()
     {
         $sandbox = true;
@@ -71,6 +78,9 @@ class AuthService implements AuthInterface
         $_SESSION['my_oauth_token'] = $oauth_data['oauth_token'];
     }
 
+    /**
+     * @return Client|null
+     */
     public function getEvernoteClient(): ?Client
     {
         return $this->client;
