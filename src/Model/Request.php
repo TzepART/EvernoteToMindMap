@@ -12,12 +12,13 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router;
+use \Symfony\Component\HttpFoundation\Request as BaseRequest;
 
 
 /**
  * Class Request
  */
-class Request
+class Request extends BaseRequest
 {
     /**
      * @var string
@@ -50,6 +51,8 @@ class Request
      */
     public function __construct(string $requestUri)
     {
+        parent::__construct();
+
         $fileLocator = new FileLocator(array(__DIR__));
         $requestContext = new RequestContext('/');
 
