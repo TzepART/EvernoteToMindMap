@@ -14,6 +14,13 @@ namespace Controller;
  */
 class MindMapController
 {
+
+    public function selectNoteAction()
+    {
+        var_dump('Hello!');
+        die();
+    }
+
     public function viewMindMapAction()
     {
         var_dump('Hello!');
