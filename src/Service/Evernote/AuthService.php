@@ -74,7 +74,7 @@ class AuthService implements AuthInterface
 
         $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
 
-        $this->client = new \Evernote\Client($oauth_data['oauth_token']);
+        $this->client = new Client($oauth_data['oauth_token']);
         $_SESSION['my_oauth_token'] = $oauth_data['oauth_token'];
     }
 
