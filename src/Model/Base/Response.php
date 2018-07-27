@@ -28,10 +28,10 @@ class Response
     public function getResponse()
     {
         $controllerClass = 'Controller\\'.$this->request->getClass();
-        $method = $this->request->getMethod();
+        $method = $this->request->getControllerMethod();
 
         $controller = new $controllerClass;
 
-        return $controller->$method();
+        return $controller->$method($this->request);
     }
 }

@@ -13,6 +13,7 @@ use Model\Base\Request;
 use Service\ParametersService;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \Evernote\Auth\OauthHandler;
+use Symfony\Component\Routing\Router;
 
 
 /**
@@ -80,7 +81,7 @@ class AuthService implements AuthInterface
         $this->sandbox = true;
         $this->china = false;
         $this->oauth_handler = new OauthHandler($this->sandbox, false, $this->china);
-        $this->callback = $this->request->getRouter()->generate('select_note_route');
+        $this->callback = $this->request->getRouter()->generate('select_note_route',[],Router::ABSOLUTE_URL);
         $this->key = $this->parametersService->getParameterByName('app_key');
         $this->secret = $this->parametersService->getParameterByName('app_secret_key');
 
@@ -91,7 +92,7 @@ class AuthService implements AuthInterface
      */
     public function isEvernoteAuth(): bool
     {
-        if (empty($_SESSION['my_oauth_token'])) {
+        if (empty($this->sessionService->get(self::PARAM_MY_TOKEN_NAME))) {
             return false;
         } else {
             return true;
@@ -121,12 +122,12 @@ class AuthService implements AuthInterface
      * @return Client|mixed
      * @throws \Evernote\Exception\AuthorizationDeniedException
      */
-    public function authorize()
+    protected function authorize()
     {
 
         $oauth_data = $this->oauth_handler->authorize($this->key, $this->secret, $this->callback);
-
-        $client = new Client($oauth_data['oauth_token']);
+        $this->sessionService->set(self::PARAM_MY_TOKEN_NAME,$oauth_data['oauth_token']);
+        $client = new Client($this->sessionService->get(self::PARAM_MY_TOKEN_NAME));
 
         return $client;
     }

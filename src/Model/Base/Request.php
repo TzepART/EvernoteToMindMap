@@ -28,7 +28,7 @@ class Request extends BaseRequest
     /**
      * @var string
      */
-    protected $method;
+    protected $controllerMethod;
 
     /**
      * @var string
@@ -58,7 +58,7 @@ class Request extends BaseRequest
 
         $this->router = new Router(
             new YamlFileLoader($fileLocator),
-            __DIR__.'/../../app/config/routes.yaml',
+            __DIR__.'/../../../app/config/routes.yaml',
 //            array('cache_dir' => __DIR__.'/../../app/cache'),
             array(),
             $requestContext
@@ -75,7 +75,7 @@ class Request extends BaseRequest
             $this->setRouteName((string) $result['_route']);
             $methodPathArray = explode('::',$result['_controller']);
             $this->setClass($methodPathArray[0]);
-            $this->setMethod($methodPathArray[1]);
+            $this->setControllerMethod($methodPathArray[1]);
         }
 
         return $this;
@@ -102,21 +102,21 @@ class Request extends BaseRequest
     /**
      * @return string
      */
-    public function getMethod(): string
+    public function getControllerMethod(): string
     {
-        return $this->method;
+        return $this->controllerMethod;
     }
-
 
     /**
-     * @param string $method
+     * @param string $controllerMethod
      * @return $this
      */
-    public function setMethod(string $method)
+    public function setControllerMethod(string $controllerMethod)
     {
-        $this->method = $method;
+        $this->controllerMethod = $controllerMethod;
         return $this;
     }
+
 
     /**
      * @return string

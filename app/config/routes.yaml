@@ -3,5 +3,9 @@ view_mind_map_route:
     defaults: { _controller: 'MindMapController::viewMindMapAction' }
 
 select_note_route:
-    path:     /mind-map/
+    path:     /select-note/
     defaults: { _controller: 'MindMapController::selectNoteAction' }
+
+login_route:
+    path:     /login/
+    defaults: { _controller: 'AuthController::loginAction' }

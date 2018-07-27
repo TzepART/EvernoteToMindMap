@@ -8,6 +8,8 @@
 
 namespace Controller;
 
+use Model\Base\Request;
+
 /**
  * Class MindMapController
  * @package Controller
@@ -15,13 +17,13 @@ namespace Controller;
 class MindMapController
 {
 
-    public function selectNoteAction()
+    public function selectNoteAction(Request $request)
     {
         var_dump('Hello!');
         die();
     }
 
-    public function viewMindMapAction()
+    public function viewMindMapAction(Request $request)
     {
         var_dump('Hello!');
         die();

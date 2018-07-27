@@ -22,10 +22,6 @@ interface AuthInterface
      */
     public function isEvernoteAuth() : bool;
 
-    /**
-     * @return mixed
-     */
-    public function authorize();
 
     /**
      * @return mixed
