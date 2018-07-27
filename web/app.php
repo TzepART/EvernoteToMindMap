@@ -14,7 +14,7 @@ use Model\Base\Response;
  */
 $loader = require __DIR__.'/../app/autoload.php';
 
-$requestUri = str_replace('/app.php','',$_SERVER["REQUEST_URI"]);
+$requestUri = $_SERVER["PATH_INFO"];
 
 spl_autoload_register(function ($class_name) {
     include  __DIR__.'/../src/'.str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';

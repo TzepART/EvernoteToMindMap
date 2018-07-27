@@ -9,6 +9,8 @@
 namespace Controller;
 
 use Model\Base\Request;
+use Service\Evernote\AuthService;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class MindMapController
@@ -19,7 +21,8 @@ class MindMapController
 
     public function selectNoteAction(Request $request)
     {
-        var_dump('Hello!');
+        var_dump((new Session())->get(AuthService::PARAM_MY_TOKEN_NAME));
+        var_dump('Hello! selectNoteAction');
         die();
     }
 

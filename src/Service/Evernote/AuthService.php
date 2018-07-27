@@ -81,7 +81,8 @@ class AuthService implements AuthInterface
         $this->sandbox = true;
         $this->china = false;
         $this->oauth_handler = new OauthHandler($this->sandbox, false, $this->china);
-        $this->callback = $this->request->getRouter()->generate('select_note_route',[],Router::ABSOLUTE_URL);
+//        $this->callback = $this->request->getRouter()->generate('select_note_route',[],Router::ABSOLUTE_URL);
+        $this->callback = 'http://localhost:8001/app.php/select-note/';
         $this->key = $this->parametersService->getParameterByName('app_key');
         $this->secret = $this->parametersService->getParameterByName('app_secret_key');
 
@@ -124,7 +125,6 @@ class AuthService implements AuthInterface
      */
     protected function authorize()
     {
-
         $oauth_data = $this->oauth_handler->authorize($this->key, $this->secret, $this->callback);
         $this->sessionService->set(self::PARAM_MY_TOKEN_NAME,$oauth_data['oauth_token']);
         $client = new Client($this->sessionService->get(self::PARAM_MY_TOKEN_NAME));
