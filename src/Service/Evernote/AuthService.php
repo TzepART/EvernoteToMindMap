@@ -9,6 +9,7 @@
 namespace Service\Evernote;
 
 use Evernote\Client;
+use Model\Base\Request;
 use Service\ParametersService;
 use Symfony\Component\HttpFoundation\Session\Session;
 use \Evernote\Auth\OauthHandler;
@@ -39,43 +40,62 @@ class AuthService implements AuthInterface
     private $client;
 
     /**
-     * AuthService constructor.
+     * @var Request
      */
-    public function __construct()
+    private $request;
+    /**
+     * @var boolean
+     */
+    private $sandbox;
+    /**
+     * @var boolean
+     */
+    private $china;
+    /**
+     * @var string
+     */
+    private $callback;
+    /**
+     * @var string
+     */
+    private $key;
+    /**
+     * @var string
+     */
+    private $secret;
+    /**
+     * @var OauthHandler
+     */
+    private $oauth_handler;
+
+    /**
+     * AuthService constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
         $this->parametersService = new ParametersService();
         $this->sessionService = new Session();
+        $this->request = $request;
+        $this->sandbox = true;
+        $this->china = false;
+        $this->oauth_handler = new OauthHandler($this->sandbox, false, $this->china);
+        $this->callback = $this->request->getRouter()->generate('select_note_route');
+        $this->key = $this->parametersService->getParameterByName('app_key');
+        $this->secret = $this->parametersService->getParameterByName('app_secret_key');
+
     }
 
     /**
      * @return bool
      */
-    public function isEvernoteAuth() : bool
+    public function isEvernoteAuth(): bool
     {
-        if(empty($_SESSION['my_oauth_token'])){
+        if (empty($_SESSION['my_oauth_token'])) {
             return false;
-        }else{
+        } else {
             return true;
         }
-    }
-
-    /**
-     * @return mixed|void
-     * @throws \Evernote\Exception\AuthorizationDeniedException
-     */
-    public function authorize()
-    {
-        $sandbox = true;
-        $china   = false;
-        $oauth_handler = new OauthHandler($sandbox, false, $china);
-        $callback = 'http://localhost:8000/index.php';
-        $key      = $this->parametersService->getParameterByName('app_key');
-        $secret   = $this->parametersService->getParameterByName('app_secret_key');
-
-        $oauth_data  = $oauth_handler->authorize($key, $secret, $callback);
-
-        $this->client = new Client($oauth_data['oauth_token']);
-        $_SESSION['my_oauth_token'] = $oauth_data['oauth_token'];
     }
 
     /**
@@ -83,6 +103,32 @@ class AuthService implements AuthInterface
      */
     public function getEvernoteClient(): ?Client
     {
+        if (empty($this->sessionService->get(self::PARAM_MY_TOKEN_NAME))) {
+            try {
+                $this->client = $this->authorize();
+            } catch (\Evernote\Exception\AuthorizationDeniedException $exception) {
+                // TODO work with exception
+            }
+        } else {
+            $this->client = new Client($this->sessionService->get(self::PARAM_MY_TOKEN_NAME));
+        }
+
         return $this->client;
     }
+
+
+    /**
+     * @return Client|mixed
+     * @throws \Evernote\Exception\AuthorizationDeniedException
+     */
+    public function authorize()
+    {
+
+        $oauth_data = $this->oauth_handler->authorize($this->key, $this->secret, $this->callback);
+
+        $client = new Client($oauth_data['oauth_token']);
+
+        return $client;
+    }
+
 }

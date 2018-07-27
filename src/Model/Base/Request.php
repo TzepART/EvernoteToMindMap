@@ -107,6 +107,7 @@ class Request extends BaseRequest
         return $this->method;
     }
 
+
     /**
      * @param string $method
      * @return $this
@@ -133,6 +134,14 @@ class Request extends BaseRequest
     {
         $this->routeName = $routeName;
         return $this;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 
 }
