@@ -82,7 +82,7 @@ class AuthService implements AuthInterface
         $this->china = false;
         $this->oauth_handler = new OauthHandler($this->sandbox, false, $this->china);
 //        $this->callback = $this->request->getRouter()->generate('select_note_route',[],Router::ABSOLUTE_URL);
-        $this->callback = 'http://localhost:8001/app.php/select-note/';
+        $this->callback = 'http://localhost:8000/app.php/select-note/';
         $this->key = $this->parametersService->getParameterByName('app_key');
         $this->secret = $this->parametersService->getParameterByName('app_secret_key');
 
