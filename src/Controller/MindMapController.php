@@ -10,7 +10,8 @@ namespace Controller;
 
 use Model\Base\Request;
 use Service\Evernote\AuthService;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Service\NoteLinksService;
+use Service\ParametersService;
 
 /**
  * Class MindMapController
@@ -21,9 +22,14 @@ class MindMapController
 
     public function selectNoteAction(Request $request)
     {
-        var_dump((new Session())->get(AuthService::PARAM_MY_TOKEN_NAME));
-        var_dump('Hello! selectNoteAction');
-        die();
+        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
+        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
+        $noteLinkList = (new NoteLinksService($client))->initNoteLinksList()->getNoteLinksList();
+
+        echo "<pre>";
+            var_dump($noteLinkList->getNoteLinks());
+        echo "</pre>";
+
     }
 
     public function viewMindMapAction(Request $request)
