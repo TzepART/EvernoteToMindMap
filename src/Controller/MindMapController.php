@@ -36,6 +36,7 @@ class MindMapController
                 var_dump($noteLink->getUpdated());
             }
         echo "</pre>";
+        // TODO send $noteLinkList to template
 
     }
 
