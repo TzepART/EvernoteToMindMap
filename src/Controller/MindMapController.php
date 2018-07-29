@@ -9,6 +9,7 @@
 namespace Controller;
 
 use Model\Base\Request;
+use Model\Note\NoteLink;
 use Service\Evernote\AuthService;
 use Service\NoteLinksService;
 use Service\ParametersService;
@@ -20,6 +21,9 @@ use Service\ParametersService;
 class MindMapController
 {
 
+    /**
+     * @param Request $request
+     */
     public function selectNoteAction(Request $request)
     {
         $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
@@ -27,11 +31,17 @@ class MindMapController
         $noteLinkList = (new NoteLinksService($client))->initNoteLinksList()->getNoteLinksList();
 
         echo "<pre>";
-            var_dump($noteLinkList->getNoteLinks());
+        /** @var NoteLink $noteLink */
+        foreach ($noteLinkList->getNoteLinks() as $index => $noteLink) {
+                var_dump($noteLink);
+            }
         echo "</pre>";
 
     }
 
+    /**
+     * @param Request $request
+     */
     public function viewMindMapAction(Request $request)
     {
         var_dump('Hello!');

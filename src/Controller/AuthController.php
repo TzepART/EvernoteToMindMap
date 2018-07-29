@@ -11,8 +11,15 @@ namespace Controller;
 use Model\Base\Request;
 use Service\Evernote\AuthService;
 
+/**
+ * Class AuthController
+ * @package Controller
+ */
 class AuthController
 {
+    /**
+     * @param Request $request
+     */
     public function loginAction(Request $request)
     {
         $client = (new AuthService($request))->setEvernoteClient()->getEvernoteClient();
