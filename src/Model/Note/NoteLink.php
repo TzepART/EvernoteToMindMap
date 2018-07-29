@@ -61,7 +61,7 @@ class NoteLink implements NoteLinkInterface
      */
     public function getCreated(): \DateTime
     {
-        return new \DateTime($this->searchResult->created);
+        return (new \DateTime())->setTimestamp($this->searchResult->created);
     }
 
     /**
@@ -69,7 +69,7 @@ class NoteLink implements NoteLinkInterface
      */
     public function getUpdated(): \DateTime
     {
-        return new \DateTime($this->searchResult->updated);
+        return (new \DateTime())->setTimestamp($this->searchResult->updated);
     }
 
 

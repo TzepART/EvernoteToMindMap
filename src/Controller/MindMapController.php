@@ -33,7 +33,7 @@ class MindMapController
         echo "<pre>";
         /** @var NoteLink $noteLink */
         foreach ($noteLinkList->getNoteLinks() as $index => $noteLink) {
-                var_dump($noteLink);
+                var_dump($noteLink->getUpdated());
             }
         echo "</pre>";
 
