@@ -21,6 +21,7 @@ class MindMapController
 
     public function selectNoteAction(Request $request)
     {
+
         var_dump((new Session())->get(AuthService::PARAM_MY_TOKEN_NAME));
         var_dump('Hello! selectNoteAction');
         die();

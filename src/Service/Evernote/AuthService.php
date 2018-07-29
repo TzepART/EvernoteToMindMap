@@ -101,9 +101,19 @@ class AuthService implements AuthInterface
     }
 
     /**
-     * @return Client|null
+     * @param string $token
+     * @return $this
      */
-    public function getEvernoteClient(): ?Client
+    public function setEvernoteClientByToken(string $token)
+    {
+        $this->client = new Client($token);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setEvernoteClient()
     {
         if (empty($this->sessionService->get(self::PARAM_MY_TOKEN_NAME))) {
             try {
@@ -115,6 +125,14 @@ class AuthService implements AuthInterface
             $this->client = new Client($this->sessionService->get(self::PARAM_MY_TOKEN_NAME));
         }
 
+        return $this;
+    }
+
+    /**
+     * @return Client|null
+     */
+    public function getEvernoteClient(): ?Client
+    {
         return $this->client;
     }
 

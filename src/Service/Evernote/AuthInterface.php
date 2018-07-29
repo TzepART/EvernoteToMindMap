@@ -26,5 +26,10 @@ interface AuthInterface
     /**
      * @return mixed
      */
-    public function getEvernoteClient() : ?Client;
+    public function setEvernoteClient();
+
+    /**
+     * @return Client|null
+     */
+    public function getEvernoteClient(): ?Client;
 }
