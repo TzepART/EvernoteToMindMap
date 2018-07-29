@@ -11,6 +11,11 @@ namespace Model\Note;
 
 use Evernote\Model\SearchResult;
 
+/**
+ * This class bridge for SearchResult
+ * Class NoteLink
+ * @package Model\Note
+ */
 class NoteLink implements NoteLinkInterface
 {
     /**
@@ -27,26 +32,41 @@ class NoteLink implements NoteLinkInterface
         $this->searchResult = $searchResult;
     }
 
+    /**
+     * @return string
+     */
     public function getGuid(): string
     {
         return $this->searchResult->guid;
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return $this->searchResult->type;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->searchResult->title;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreated(): \DateTime
     {
         return new \DateTime($this->searchResult->created);
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getUpdated(): \DateTime
     {
         return new \DateTime($this->searchResult->updated);
