@@ -16,15 +16,16 @@ namespace Model\Note;
 interface NoteLinksListInterface
 {
     /**
-     * @param NoteLinkInterface $note
+     * @param NoteLinkInterface $noteLink
      * @return mixed
      */
-    public function addNoteLink(NoteLinkInterface $note);
+    public function addNoteLink(NoteLinkInterface $noteLink);
 
     /**
+     * @param NoteLinkInterface $noteLink
      * @return mixed
      */
-    public function deleteNoteLink();
+    public function deleteNoteLink(NoteLinkInterface $noteLink);
 
     /**
      * @return array

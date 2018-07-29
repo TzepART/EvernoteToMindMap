@@ -18,9 +18,9 @@ use Model\Note\NoteLinksListInterface;
 interface NoteLinksServiceInterface
 {
     /**
-     * @return NoteLinksListInterface
+     * @return NoteLinksListInterface|null
      */
-    public function getNoteLinksList() : NoteLinksListInterface;
+    public function getNoteLinksList() : ?NoteLinksListInterface;
 
     /**
      * @return mixed

@@ -11,6 +11,8 @@ namespace Service;
 
 use Evernote\Client;
 use Evernote\Model\SearchResult;
+use Model\Note\NoteLink;
+use Model\Note\NoteLinksList;
 use Model\Note\NoteLinksListInterface;
 use \Evernote\Model\Search;
 
@@ -46,32 +48,24 @@ class NoteLinksService implements NoteLinksServiceInterface
          * The search string
          */
         $search = new Search(self::SEARCH_STRING);
-
+        $searchResults = [];
 
         try{
-            $results = $this->client->findNotesWithSearch($search);
+            $searchResults = $this->client->findNotesWithSearch($search);
         }catch (\Exception $exception){
             var_dump($exception->getMessage());
         }
 
-        if(!empty($results)){
-            /** @var SearchResult $result */
-            foreach ($results as $result) {
-                var_dump($result);
-//                $noteGuid    = $result->guid;
-//                $noteType    = $result->type;
-//                $noteTitle   = $result->title;
-//                $noteCreated = $result->created;
-//                $noteUpdated = $result->updated;
-            }
-        }
+        $this->initNoteLinkListBySearchResults($searchResults);
+
+        return $this;
     }
 
 
     /**
-     * @return NoteLinksListInterface
+     * @return NoteLinksListInterface|null
      */
-    public function getNoteLinksList(): NoteLinksListInterface
+    public function getNoteLinksList(): ?NoteLinksListInterface
     {
         return $this->noteLinksList;
     }
@@ -83,6 +77,24 @@ class NoteLinksService implements NoteLinksServiceInterface
     public function setNoteLinksList(NoteLinksListInterface $noteLinksList)
     {
         $this->noteLinksList = $noteLinksList;
+        return $this;
+    }
+
+    /**
+     * @param array $searchResults
+     * @return $this
+     */
+    protected function initNoteLinkListBySearchResults(array $searchResults)
+    {
+        if (!empty($searchResults)) {
+            $noteLinksList = new NoteLinksList();
+            /** @var SearchResult $searchResult */
+            foreach ($searchResults as $searchResult) {
+                $noteLinksList->addNoteLink(new NoteLink($searchResult));
+            }
+            $this->setNoteLinksList($noteLinksList);
+        }
+
         return $this;
     }
 }
