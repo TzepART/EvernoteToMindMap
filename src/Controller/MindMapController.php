@@ -13,6 +13,7 @@ use Model\Note\NoteLink;
 use Service\Evernote\AuthService;
 use Service\NoteLinksService;
 use Service\ParametersService;
+use Evernote\Model\Note;
 
 /**
  * Class MindMapController
@@ -20,7 +21,6 @@ use Service\ParametersService;
  */
 class MindMapController
 {
-
     /**
      * @param Request $request
      */
@@ -33,7 +33,7 @@ class MindMapController
         echo "<pre>";
         /** @var NoteLink $noteLink */
         foreach ($noteLinkList->getNoteLinks() as $index => $noteLink) {
-                var_dump($noteLink->getUpdated());
+                echo "<a href='/app.php/mind-map/".$noteLink->getGuid()."/'>".$noteLink->getTitle()."<a><br>";
             }
         echo "</pre>";
         // TODO send $noteLinkList to template
@@ -42,10 +42,16 @@ class MindMapController
 
     /**
      * @param Request $request
+     * @param string $guid
      */
-    public function viewMindMapAction(Request $request)
+    public function viewMindMapAction(Request $request, $guid)
     {
-        var_dump('Hello!');
-        die();
+        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
+        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
+        /** @var Note $evernoteNote */
+        $evernoteNote = $client->getNote($guid);
+        $content = $evernoteNote->getContent()->toEnml();
+
+
     }
 }
