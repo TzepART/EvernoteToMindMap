@@ -10,6 +10,7 @@ namespace Controller;
 
 use Model\Base\Request;
 use Service\Evernote\AuthService;
+use Service\NoteLinksService;
 use Service\ParametersService;
 
 /**
@@ -23,39 +24,11 @@ class MindMapController
     {
         $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
         $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
-
-        /**
-         * The search string
-         */
-        $search = new \Evernote\Model\Search('');
-        /**
-         * The notebook to search in
-         */
-        $notebook = null;
-
-
-        try{
-                $results = $client->findNotesWithSearch($search);
-        }catch (\Exception $exception){
-            var_dump($exception->getMessage());
-        }
+        $noteLinkList = (new NoteLinksService($client))->initNoteLinksList()->getNoteLinksList();
 
         echo "<pre>";
-        if(!empty($results)){
-            foreach ($results as $result) {
-                var_dump($result);
-
-//                $noteGuid    = $result->guid;
-//                $noteType    = $result->type;
-//                $noteTitle   = $result->title;
-//                $noteCreated = $result->created;
-//                $noteUpdated = $result->updated;
-            }
-        }else{
-            echo "Empty results";
-        }
+            var_dump($noteLinkList->getNoteLinks());
         echo "</pre>";
-
 
     }
 
