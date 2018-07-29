@@ -15,6 +15,6 @@ class AuthController
 {
     public function loginAction(Request $request)
     {
-        $client = (new AuthService($request))->setEvernoteClient();
+        $client = (new AuthService($request))->setEvernoteClient()->getEvernoteClient();
     }
 }

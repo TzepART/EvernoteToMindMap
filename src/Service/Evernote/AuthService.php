@@ -23,6 +23,7 @@ use Symfony\Component\Routing\Router;
 class AuthService implements AuthInterface
 {
     const PARAM_MY_TOKEN_NAME = 'my_oauth_token';
+    const NAME_TOKEN_PARAMETER = 'app_dev_token';
 
     /**
      * @var ParametersService
@@ -93,10 +94,10 @@ class AuthService implements AuthInterface
      */
     public function isEvernoteAuth(): bool
     {
-        if (empty($this->sessionService->get(self::PARAM_MY_TOKEN_NAME))) {
-            return false;
-        } else {
+        if ($this->client instanceof Client) {
             return true;
+        } else {
+            return false;
         }
     }
 

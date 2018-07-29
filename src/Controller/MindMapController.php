@@ -10,7 +10,7 @@ namespace Controller;
 
 use Model\Base\Request;
 use Service\Evernote\AuthService;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Service\ParametersService;
 
 /**
  * Class MindMapController
@@ -21,10 +21,42 @@ class MindMapController
 
     public function selectNoteAction(Request $request)
     {
+        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
+        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
 
-        var_dump((new Session())->get(AuthService::PARAM_MY_TOKEN_NAME));
-        var_dump('Hello! selectNoteAction');
-        die();
+        /**
+         * The search string
+         */
+        $search = new \Evernote\Model\Search('');
+        /**
+         * The notebook to search in
+         */
+        $notebook = null;
+
+
+        try{
+                $results = $client->findNotesWithSearch($search);
+        }catch (\Exception $exception){
+            var_dump($exception->getMessage());
+        }
+
+        echo "<pre>";
+        if(!empty($results)){
+            foreach ($results as $result) {
+                var_dump($result);
+
+//                $noteGuid    = $result->guid;
+//                $noteType    = $result->type;
+//                $noteTitle   = $result->title;
+//                $noteCreated = $result->created;
+//                $noteUpdated = $result->updated;
+            }
+        }else{
+            echo "Empty results";
+        }
+        echo "</pre>";
+
+
     }
 
     public function viewMindMapAction(Request $request)
