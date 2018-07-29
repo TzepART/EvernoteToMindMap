@@ -40,10 +40,4 @@ interface NoteLinkInterface
      */
     public function getUpdated(): \DateTime;
 
-    /**
-     * @return int
-     */
-    public function getUpdateSequenceNum(): int;
-
-
 }
