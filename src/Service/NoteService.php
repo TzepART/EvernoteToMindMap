@@ -10,7 +10,12 @@ namespace Service;
 
 
 use Model\Note\NoteInterface;
+use \SimpleXmlIterator;
 
+/**
+ * Class NoteService
+ * @package Service
+ */
 class NoteService implements NoteServiceInterface
 {
     /**
@@ -31,20 +36,40 @@ class NoteService implements NoteServiceInterface
     /**
      * @return string
      */
-    public function getCheckListFromNote() : string
+    public function generateMindMaps() : string
     {
         $checkList = '';
         $content = $this->note->getContent();
-        $xml = new \SimpleXMLElement($content);
-        foreach ($xml->div as $index => $item) {
-            var_dump((array) $item);
-            isset($item['en-todo']) ? var_dump($item['en-todo']) : var_dump("NoN") ;
-        }
+        $xml = new SimpleXmlIterator($content);
+        echo "<pre>";
+//            var_dump($this->sxiToArray($xml));
+            var_dump($xml);
+        echo "</pre>";
 
         // TODO logic for selecting checkList
         // create models for check List
 
         return $checkList;
+    }
+
+    /**
+     * @param SimpleXmlIterator $sxi
+     * @return array
+     */
+    protected function sxiToArray(SimpleXmlIterator $sxi){
+        $a = array();
+        for( $sxi->rewind(); $sxi->valid(); $sxi->next() ) {
+            if(!array_key_exists($sxi->key(), $a)){
+                $a[$sxi->key()] = [];
+            }
+            if($sxi->hasChildren()){
+                $a[$sxi->key()][] = $this->sxiToArray($sxi->current());
+            }
+            else{
+                $a[$sxi->key()][] = $sxi;
+            }
+        }
+        return $a;
     }
 
 }

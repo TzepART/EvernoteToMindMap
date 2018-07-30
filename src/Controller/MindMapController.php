@@ -28,8 +28,8 @@ class MindMapController
      */
     public function selectNoteAction(Request $request)
     {
-        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
-        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
+        $client = $this->getEvernoteClient($request);
+
         $noteLinkList = (new NoteLinksService($client))->initNoteLinksList()->getNoteLinksList();
 
         echo "<pre>";
@@ -48,15 +48,24 @@ class MindMapController
      */
     public function viewMindMapAction(Request $request, $guid)
     {
-        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
-        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
+        $client = $this->getEvernoteClient($request);
 
         /** @var BaseNote $evernoteNote */
         $evernoteNote = $client->getNote($guid);
 
         $noteService = new NoteService(new Note($evernoteNote));
-        echo "<pre>";
-            var_dump($noteService->getCheckListFromNote());
-        echo "</pre>";
+        $noteService->generateMindMaps();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Evernote\Client|null
+     */
+    protected function getEvernoteClient(Request $request)
+    {
+        $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
+        $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
+
+        return $client;
     }
 }
