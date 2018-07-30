@@ -34,4 +34,15 @@ interface ComponentInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * @param bool $status
+     * @return mixed
+     */
+    public function setStatus(bool $status);
+
+    /**
+     * @return bool
+     */
+    public function getStatus(): bool;
 }
