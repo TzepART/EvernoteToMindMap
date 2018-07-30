@@ -40,10 +40,13 @@ class NoteService implements NoteServiceInterface
     {
         $checkList = '';
         $content = $this->note->getContent();
+        $content = $this->updateContent($content);
+
         $xml = new SimpleXmlIterator($content);
         echo "<pre>";
-//            var_dump($this->sxiToArray($xml));
-            var_dump($xml);
+            var_dump($this->sxiToArray($xml));
+//            var_dump($xml);
+//            var_dump(htmlspecialchars($content));
         echo "</pre>";
 
         // TODO logic for selecting checkList
@@ -66,10 +69,23 @@ class NoteService implements NoteServiceInterface
                 $a[$sxi->key()][] = $this->sxiToArray($sxi->current());
             }
             else{
-                $a[$sxi->key()][] = $sxi;
+                $a[$sxi->key()][] = $sxi->current();
             }
         }
         return $a;
+    }
+
+    /**
+     * It's need for correct using SimpleXmlIterator
+     * @param $content
+     * @return null|string|string[]
+     */
+    protected function updateContent($content)
+    {
+        $pattern = '/<\/en-todo>([^<]+)<\/div>/ui';
+        $replacement = '</en-todo><task-title>${1}</task-title></div>';
+        $content = preg_replace($pattern, $replacement, $content);
+        return $content;
     }
 
 }

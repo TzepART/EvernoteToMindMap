@@ -33,7 +33,7 @@ class Note implements NoteInterface
     public function __construct(BaseNote $baseNote)
     {
         $this->baseNote = $baseNote;
-        $this->setContent($this->baseNote->getContent()->toEnml());
+        $this->setContent($this->baseNote->getContent());
     }
 
     /**
