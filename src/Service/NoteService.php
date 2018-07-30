@@ -34,7 +34,7 @@ class NoteService implements NoteServiceInterface
     public function getCheckListFromNote() : string
     {
         $checkList = '';
-        $content = $this->note->getNoteContent();
+        $content = $this->note->getContent();
 
         // TODO logic for selecting checkList
         return $checkList;

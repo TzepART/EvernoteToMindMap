@@ -12,8 +12,10 @@ use Model\Base\Request;
 use Model\Note\NoteLink;
 use Service\Evernote\AuthService;
 use Service\NoteLinksService;
+use Service\NoteService;
 use Service\ParametersService;
-use Evernote\Model\Note;
+use Evernote\Model\Note as BaseNote;
+use \Model\Note\Note;
 
 /**
  * Class MindMapController
@@ -48,10 +50,13 @@ class MindMapController
     {
         $token = (new ParametersService())->getParameterByName(AuthService::NAME_TOKEN_PARAMETER);
         $client = (new AuthService($request))->setEvernoteClientByToken($token)->getEvernoteClient();
-        /** @var Note $evernoteNote */
+
+        /** @var BaseNote $evernoteNote */
         $evernoteNote = $client->getNote($guid);
-        $content = $evernoteNote->getContent()->toEnml();
 
-
+        $noteService = new NoteService(new Note($evernoteNote));
+        echo "<pre>";
+            var_dump($noteService->getCheckListFromNote());
+        echo "</pre>";
     }
 }
