@@ -37,6 +37,8 @@ class NoteService implements NoteServiceInterface
         $content = $this->note->getContent();
 
         // TODO logic for selecting checkList
+        // create models for check List
+
         return $checkList;
     }
 
