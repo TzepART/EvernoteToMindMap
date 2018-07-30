@@ -21,6 +21,11 @@ abstract class Component implements ComponentInterface
     protected $name;
 
     /**
+     * @var bool
+     */
+    protected $status = false;
+
+    /**
      * @var ParentComponentInterface|null
      */
     protected $parent;
@@ -54,6 +59,24 @@ abstract class Component implements ComponentInterface
     public function setName(string $name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param bool $status
+     * @return $this
+     */
+    public function setStatus(bool $status)
+    {
+        $this->status = $status;
         return $this;
     }
 

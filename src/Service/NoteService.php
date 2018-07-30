@@ -37,7 +37,8 @@ class NoteService implements NoteServiceInterface
         $content = $this->note->getContent();
         $xml = new \SimpleXMLElement($content);
         foreach ($xml->div as $index => $item) {
-            var_dump($item);
+            var_dump((array) $item);
+            isset($item['en-todo']) ? var_dump($item['en-todo']) : var_dump("NoN") ;
         }
 
         // TODO logic for selecting checkList
