@@ -35,6 +35,10 @@ class NoteService implements NoteServiceInterface
     {
         $checkList = '';
         $content = $this->note->getContent();
+        $xml = new \SimpleXMLElement($content);
+        foreach ($xml->div as $index => $item) {
+            var_dump($item);
+        }
 
         // TODO logic for selecting checkList
         // create models for check List
