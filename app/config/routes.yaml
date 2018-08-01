@@ -1,5 +1,5 @@
 view_mind_map_route:
-    path:     /mind-map/
+    path:     /mind-map/{guid}/
     defaults: { _controller: 'MindMapController::viewMindMapAction' }
 
 select_note_route:

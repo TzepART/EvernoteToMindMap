@@ -16,7 +16,7 @@ namespace Model\Note;
 interface NoteInterface
 {
     /**
-     * @return mixed
+     * @return string
      */
-    public function getNoteContent();
+    public function getContent() : string ;
 }

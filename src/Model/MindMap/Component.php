@@ -21,19 +21,26 @@ abstract class Component implements ComponentInterface
     protected $name;
 
     /**
+     * @var bool
+     */
+    protected $status = false;
+
+    /**
      * @var ParentComponentInterface|null
      */
     protected $parent;
 
     /**
      * Component constructor.
-     * @param $name
+     * @param string $name
+     * @param bool $status
      * @param ParentComponentInterface|null $parent
      */
-    public function __construct($name, ParentComponentInterface $parent = null)
+    public function __construct($name, $status, ParentComponentInterface $parent = null)
     {
         $this->name = $name;
         $this->parent = $parent;
+        $this->status = (bool) $status;
         if ($this->parent instanceof ParentComponentInterface) {
             $this->parent->addChild($this);
         }
@@ -54,6 +61,24 @@ abstract class Component implements ComponentInterface
     public function setName(string $name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStatus(): bool
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param bool $status
+     * @return $this
+     */
+    public function setStatus(bool $status)
+    {
+        $this->status = $status;
         return $this;
     }
 

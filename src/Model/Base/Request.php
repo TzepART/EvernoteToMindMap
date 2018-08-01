@@ -20,6 +20,8 @@ use \Symfony\Component\HttpFoundation\Request as BaseRequest;
  */
 class Request extends BaseRequest
 {
+    const GUID_PARAMETER_NAME = 'guid';
+
     /**
      * @var string
      */
@@ -46,6 +48,11 @@ class Request extends BaseRequest
     protected $requestUri;
 
     /**
+     * @var string
+     */
+    protected $guid = '';
+
+    /**
      * Request constructor.
      * @param string $requestUri
      */
@@ -56,6 +63,7 @@ class Request extends BaseRequest
         $fileLocator = new FileLocator(array(__DIR__));
         $requestContext = new RequestContext('/');
 
+        // TODO cache turn off
         $this->router = new Router(
             new YamlFileLoader($fileLocator),
             __DIR__.'/../../../app/config/routes.yaml',
@@ -76,6 +84,11 @@ class Request extends BaseRequest
             $methodPathArray = explode('::',$result['_controller']);
             $this->setClass($methodPathArray[0]);
             $this->setControllerMethod($methodPathArray[1]);
+
+            // TODO remade!
+            if(!empty($result[self::GUID_PARAMETER_NAME])){
+                $this->setGuid($result[self::GUID_PARAMETER_NAME]);
+            }
         }
 
         return $this;
@@ -142,6 +155,24 @@ class Request extends BaseRequest
     public function getRouter(): Router
     {
         return $this->router;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGuid(): string
+    {
+        return $this->guid;
+    }
+
+    /**
+     * @param string $guid
+     * @return $this
+     */
+    public function setGuid(string $guid)
+    {
+        $this->guid = $guid;
+        return $this;
     }
 
 }

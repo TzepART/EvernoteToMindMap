@@ -23,13 +23,14 @@ class Node extends Component implements ParentComponentInterface
     /**
      * CDirectory constructor.
      * @param $name
+     * @param bool $status
      * @param Node|null $parent
      */
-    public function __construct($name, Node $parent = null)
+    public function __construct($name,$status, Node $parent = null)
     {
         $this->children = [];
         // Retrieve constructor of Component
-        parent::__construct($name, $parent);
+        parent::__construct($name, $status, $parent);
     }
 
     /**

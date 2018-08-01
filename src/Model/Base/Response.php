@@ -32,6 +32,11 @@ class Response
 
         $controller = new $controllerClass;
 
-        return $controller->$method($this->request);
+        // TODO remade!
+        if(empty($this->request->getGuid())){
+            return $controller->$method($this->request);
+        }else{
+            return $controller->$method($this->request,$this->request->getGuid());
+        }
     }
 }
