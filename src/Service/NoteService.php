@@ -129,10 +129,22 @@ class NoteService implements NoteServiceInterface
     protected function addToList(SimpleXmlIterator $sxi)
     {
         if(!$this->isExistCurrentList()){
+            $attr = [];
+            $checkAttr = [];
+            foreach($sxi->attributes() as $attrName => $attrValue) {
+                $attr[(string) $attrName] = (string) $attrValue;
+            }
+
+            if($sxi->enTodo->attributes() instanceof SimpleXMLIterator){
+                foreach($sxi->enTodo->attributes() as $attrCheckName => $attrCheckValue) {
+                    $checkAttr[(string) $attrCheckName] = (string) $attrCheckValue;
+                }
+            }
+
             $element = [
-                'attr' =>  $sxi->attributes(),
+                'attr' =>  $attr,
                 'name' => $sxi->taskName->getName(),
-                'check' => $sxi->enTodo->attributes()
+                'checkedAttr' => $checkAttr
             ];
             $this->checkLists->push($element);
         }else{
