@@ -18,7 +18,7 @@ use \SimpleXmlIterator;
  */
 class NoteService implements NoteServiceInterface
 {
-    const CHECK_ELEMENT_KEY = 'en-todo';
+    const CHECK_ELEMENT_KEY = 'enTodo';
 
     /**
      * @var \SplDoublyLinkedList
@@ -131,7 +131,8 @@ class NoteService implements NoteServiceInterface
         if(!$this->isExistCurrentList()){
             $element = [
                 'attr' =>  $sxi->attributes(),
-                'children' => $sxi,
+                'name' => $sxi->taskName->getName(),
+                'check' => $sxi->enTodo->attributes()
             ];
             $this->checkLists->push($element);
         }else{
@@ -172,6 +173,7 @@ class NoteService implements NoteServiceInterface
         $pattern = '/<\/en-todo>([^<]+)<\/div>/ui';
         $replacement = '</en-todo><taskName>${1}</taskName></div>';
         $content = preg_replace($pattern, $replacement, $content);
+        $content = str_replace('en-todo','enTodo',$content);
         return $content;
     }
 
