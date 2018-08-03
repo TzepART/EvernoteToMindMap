@@ -89,6 +89,9 @@ class NoteService implements NoteServiceInterface
         return $checkList;
     }
 
+    /**
+     * @param SimpleXmlIterator $sxi
+     */
     public function noteXmlToListCheckLists(SimpleXmlIterator $sxi)
     {
         for( $sxi->rewind(); $sxi->valid(); $sxi->next() ){
@@ -105,6 +108,10 @@ class NoteService implements NoteServiceInterface
         }
     }
 
+    /**
+     * @param SimpleXmlIterator $sxi
+     * @return bool
+     */
     protected function checkExistKey(SimpleXmlIterator $sxi)
     {
         for($sxi->rewind(); $sxi->valid(); $sxi->next() ){
@@ -115,11 +122,16 @@ class NoteService implements NoteServiceInterface
         return false;
     }
 
+    /**
+     * @param SimpleXmlIterator $sxi
+     * @return $this
+     */
     protected function addToList(SimpleXmlIterator $sxi)
     {
         if(!$this->isExistCurrentList()){
             $element = [
-              'attr' =>  $sxi->attributes(),
+                'attr' =>  $sxi->attributes(),
+                'children' => $sxi,
             ];
             $this->checkLists->push($element);
         }else{
@@ -158,7 +170,7 @@ class NoteService implements NoteServiceInterface
     protected function updateContent($content)
     {
         $pattern = '/<\/en-todo>([^<]+)<\/div>/ui';
-        $replacement = '</en-todo><task-title>${1}</task-title></div>';
+        $replacement = '</en-todo><taskName>${1}</taskName></div>';
         $content = preg_replace($pattern, $replacement, $content);
         return $content;
     }
