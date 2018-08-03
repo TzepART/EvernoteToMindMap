@@ -18,10 +18,22 @@ use \SimpleXmlIterator;
  */
 class NoteService implements NoteServiceInterface
 {
+    const CHECK_ELEMENT_KEY = 'enTodo';
+
+    /**
+     * @var \SplDoublyLinkedList
+     */
+    private $checkLists;
+
     /**
      * @var NoteInterface
      */
     private $note;
+
+    /**
+     * @var bool
+     */
+    private $existCurrentList = false;
 
 
     /**
@@ -31,6 +43,25 @@ class NoteService implements NoteServiceInterface
     public function __construct(NoteInterface $note)
     {
         $this->note = $note;
+        $this->checkLists = new \SplDoublyLinkedList();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExistCurrentList(): bool
+    {
+        return $this->existCurrentList;
+    }
+
+    /**
+     * @param bool $existCurrentList
+     * @return $this
+     */
+    public function setExistCurrentList(bool $existCurrentList)
+    {
+        $this->existCurrentList = $existCurrentList;
+        return $this;
     }
 
     /**
@@ -42,10 +73,13 @@ class NoteService implements NoteServiceInterface
         $content = $this->note->getContent();
         $content = $this->updateContent($content);
 
-        $xml = new SimpleXmlIterator($content);
+        $sxi = new SimpleXmlIterator($content);
+        $this->noteXmlToListCheckLists($sxi);
+
         echo "<pre>";
-            var_dump($this->sxiToArray($xml));
-//            var_dump($xml);
+//            var_dump($noteArray);
+            var_dump($this->checkLists);
+//            var_dump($sxi);
 //            var_dump(htmlspecialchars($content));
         echo "</pre>";
 
@@ -57,21 +91,87 @@ class NoteService implements NoteServiceInterface
 
     /**
      * @param SimpleXmlIterator $sxi
+     */
+    public function noteXmlToListCheckLists(SimpleXmlIterator $sxi)
+    {
+        for( $sxi->rewind(); $sxi->valid(); $sxi->next() ){
+            if($sxi->hasChildren()){
+                if($this->checkExistKey($sxi->current())){
+                    $this->addToList($sxi->current());
+                }else{
+                    // existList to false
+                    $this->setExistCurrentList(false);
+                }
+            }else{
+                $this->setExistCurrentList(false);
+            }
+        }
+    }
+
+    /**
+     * @param SimpleXmlIterator $sxi
+     * @return bool
+     */
+    protected function checkExistKey(SimpleXmlIterator $sxi)
+    {
+        for($sxi->rewind(); $sxi->valid(); $sxi->next() ){
+            if($sxi->key() == self::CHECK_ELEMENT_KEY){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param SimpleXmlIterator $sxi
+     * @return $this
+     */
+    protected function addToList(SimpleXmlIterator $sxi)
+    {
+        if(!$this->isExistCurrentList()){
+            $attr = [];
+            $checkAttr = [];
+            foreach($sxi->attributes() as $attrName => $attrValue) {
+                $attr[(string) $attrName] = (string) $attrValue;
+            }
+
+            if($sxi->enTodo->attributes() instanceof SimpleXMLIterator){
+                foreach($sxi->enTodo->attributes() as $attrCheckName => $attrCheckValue) {
+                    $checkAttr[(string) $attrCheckName] = (string) $attrCheckValue;
+                }
+            }
+
+            $element = [
+                'attr' =>  $attr,
+                'name' => $sxi->taskName->getName(),
+                'checkedAttr' => $checkAttr
+            ];
+            $this->checkLists->push($element);
+        }else{
+
+        }
+        return $this;
+    }
+
+
+    /**
+     * TODO create Doubly Linked List using SplDoublyLinkedList
+     * @param SimpleXmlIterator $sxi
      * @return array
      */
-    protected function sxiToArray(SimpleXmlIterator $sxi){
-        $a = array();
+    protected function xmlModelsToArray(SimpleXmlIterator $sxi){
+        $a = [];
         for( $sxi->rewind(); $sxi->valid(); $sxi->next() ) {
             if(!array_key_exists($sxi->key(), $a)){
                 $a[$sxi->key()] = [];
             }
             if($sxi->hasChildren()){
-                $a[$sxi->key()][] = $this->sxiToArray($sxi->current());
-            }
-            else{
+                $a[$sxi->key()][] = $this->xmlModelsToArray($sxi->current());
+            }else{
                 $a[$sxi->key()][] = $sxi->current();
             }
         }
+
         return $a;
     }
 
@@ -83,8 +183,9 @@ class NoteService implements NoteServiceInterface
     protected function updateContent($content)
     {
         $pattern = '/<\/en-todo>([^<]+)<\/div>/ui';
-        $replacement = '</en-todo><task-title>${1}</task-title></div>';
+        $replacement = '</en-todo><taskName>${1}</taskName></div>';
         $content = preg_replace($pattern, $replacement, $content);
+        $content = str_replace('en-todo','enTodo',$content);
         return $content;
     }
 
