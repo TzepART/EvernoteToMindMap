@@ -77,14 +77,12 @@ class NoteService implements NoteServiceInterface
         $this->noteXmlToListCheckLists($sxi);
 
         echo "<pre>";
-//            var_dump($noteArray);
             var_dump($this->checkLists);
-//            var_dump($sxi);
-//            var_dump(htmlspecialchars($content));
         echo "</pre>";
 
         // TODO logic for selecting checkList
         // create models for check List
+
 
         return $checkList;
     }
