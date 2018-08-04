@@ -75,6 +75,9 @@ class Request extends BaseRequest
         $this->requestUri = $requestUri;
     }
 
+    /**
+     * @return $this
+     */
     public function matchRequestUri()
     {
         $result = $this->router->match($this->requestUri);

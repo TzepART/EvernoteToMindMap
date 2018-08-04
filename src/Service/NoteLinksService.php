@@ -42,6 +42,9 @@ class NoteLinksService implements NoteLinksServiceInterface
         $this->client = $client;
     }
 
+    /**
+     * @return $this|mixed
+     */
     public function initNoteLinksList()
     {
         /**
