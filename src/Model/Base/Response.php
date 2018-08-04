@@ -9,6 +9,10 @@
 namespace Model\Base;
 
 
+/**
+ * Class Response
+ * @package Model\Base
+ */
 class Response
 {
     /**
@@ -25,6 +29,9 @@ class Response
         $this->request = $request;
     }
 
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         $controllerClass = 'Controller\\'.$this->request->getClass();
