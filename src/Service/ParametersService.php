@@ -18,6 +18,7 @@ use Symfony\Component\Yaml\Yaml;
 class ParametersService
 {
 
+    const PARAMETERS_NAME = 'parameters';
     /**
      * @var array
      */
@@ -37,8 +38,8 @@ class ParametersService
      */
     public function getParameterByName(string $parameterName)
     {
-        if(isset($this->ymalParseArray['parameters'][$parameterName])){
-            return $this->ymalParseArray['parameters'][$parameterName];
+        if(isset($this->ymalParseArray[self::PARAMETERS_NAME][$parameterName])){
+            return $this->ymalParseArray[self::PARAMETERS_NAME][$parameterName];
         }else{
             return null;
         }
