@@ -29,7 +29,7 @@ class ParametersService
      */
     public function __construct()
     {
-        $this->ymalParseArray = Yaml::parseFile(__DIR__.'/../../app/parameters.yml');
+        $this->ymalParseArray = Yaml::parseFile(__DIR__ . '/../../app/parameters.yml');
     }
 
     /**

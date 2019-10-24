@@ -7,7 +7,7 @@
  */
 
 function __autoload($classname) {
-    $filename = __DIR__."/../src/". str_replace('\\','/',$classname) .".php";
+    $filename = __DIR__ . "/../src/" . str_replace('\\', '/', $classname) .".php";
     include_once($filename);
 }
 

@@ -66,7 +66,7 @@ class Request extends BaseRequest
         // TODO cache turn off
         $this->router = new Router(
             new YamlFileLoader($fileLocator),
-            __DIR__.'/../../../app/config/routes.yaml',
+            __DIR__ . '/../../../app/config/routes.yaml',
 //            array('cache_dir' => __DIR__.'/../../app/cache'),
             array(),
             $requestContext
